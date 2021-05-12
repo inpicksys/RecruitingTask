@@ -1,37 +1,37 @@
+using System;
+using System.Text;
+
 namespace LogTest
 {
-	using System;
-	using System.Text;
-
 	/// <summary>
-	/// This is the object that the diff. loggers (filelogger, consolelogger etc.) will operate on. The LineText() method will be called to get the text (formatted) to log
+	/// This is the object that the diff. loggers (filelogger, consolelogger etc.) will operate on. 
+	/// The LineText() method will be called to get the text (formatted) to log
 	/// </summary>
-	public class LogLine
+	public class LogRecord
 	{
-		#region Private Fields
-
-		#endregion
 
 		#region Constructors
 
-		public LogLine()
+		public LogRecord()
 		{
-			this.Text = "";
 		}
 
 		#endregion
 
 		#region Public Methods
-
+		public static string FormatExceptionMessage(string message, Exception exception)
+		{
+			return $"{message}; cause: type={exception.GetType()}, message={exception.Message}, callstack={exception.StackTrace}.";
+		}
 		/// <summary>
 		/// Return a formatted line
 		/// </summary>
 		/// <returns></returns>
 		public virtual string LineText()
 		{
-			StringBuilder sb = new StringBuilder();
+			var sb = new StringBuilder();
 
-			if (this.Text.Length > 0)
+			if (Text.Length > 0)
 			{
 				sb.Append(this.Text);
 				sb.Append(". ");
@@ -44,7 +44,7 @@ namespace LogTest
 
 		public virtual string CreateLineText()
 		{
-			return "";
+			return string.Empty;
 		}
 
 		#endregion
